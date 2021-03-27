@@ -13,7 +13,7 @@ def main():
         X_test = np.load('X_test.npy')
         y_train = np.load('y_train.npy')
         y_test = np.load('y_test.npy')
-    except:
+    except Exception:
         X_train, X_test, y_train, y_test = create_train_test_datasets()
 
         np.save('X_train.npy', X_train)
@@ -23,7 +23,7 @@ def main():
 
     try:
         model = load_model('models/2-dense')
-    except:
+    except Exception:
         model = create_model('2-dense', X_train, X_test, y_train, y_test)
 
     predict_and_show(model, random.choice(X_test))

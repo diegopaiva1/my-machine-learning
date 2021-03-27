@@ -18,7 +18,7 @@ def main(argv):
         X_test = np.load('X_test.npy')
         y_train = np.load('y_train.npy')
         y_test = np.load('y_test.npy')
-    except:
+    except Exception:
         X_train, X_test, y_train, y_test = create_train_test_datasets()
 
         np.save('X_train.npy', X_train)
@@ -28,7 +28,7 @@ def main(argv):
 
     try:
         model = load_model(argv[1])
-    except:
+    except Exception:
         conv_layers = [1, 2, 3]
         dense_layers = [0, 1, 2]
         units = [32, 64, 128]
@@ -67,7 +67,7 @@ def create_train_test_datasets():
                 img_array = cv2.resize(img_array, (img_width, img_height))
                 X.append(img_array)
                 y.append(label)
-            except:
+            except Exception:
                 pass # ignore broken images
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3)

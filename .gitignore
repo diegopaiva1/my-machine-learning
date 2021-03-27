@@ -1,0 +1,9 @@
+# Kaggle Cats and Dogs dataset
+PetImages
+
+# Saved models and logs
+models/
+logs/
+
+# NumPy save-files
+*.npy

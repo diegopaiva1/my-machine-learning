@@ -10,6 +10,8 @@ from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dropout, Conv2D, Dense, Flatten, MaxPooling2D
 from tensorflow.keras.callbacks import TensorBoard
 
+CATEGORIES = ['Cat', 'Dog']
+
 def main(argv):
     try:
         X_train = np.load('X_train.npy')
@@ -37,6 +39,8 @@ def main(argv):
                     model_name = f'{c}-conv-{u}-units-{d}-dense'
                     model = create_model(model_name, X_train, X_test, y_train, y_test, c, d, u)
 
+    predict_and_show(model, random.choice(X_test))
+
 def create_train_test_datasets():
     ''' Create train-test datasets.
 
@@ -54,7 +58,7 @@ def create_train_test_datasets():
     X = []
     y = []
 
-    for label, category in enumerate(['Cat', 'Dog']):
+    for label, category in enumerate(CATEGORIES):
         path = os.path.join('PetImages/', category)
 
         for img in os.listdir(path):
@@ -127,6 +131,22 @@ def create_model(model_name, X_train, X_test, y_train, y_test, conv_layers, dens
     model.save('models/' + model_name)
 
     return model
+
+def predict_and_show(model, sample):
+    ''' Show the sample's image and predict its class.
+
+    Parameters
+    ----------
+    `model`: the model.
+    `sample`: a cv2 image array.
+    '''
+
+    prediction_probs = model.predict(np.array([sample]))[0]
+    label = CATEGORIES[np.argmax(prediction_probs)]
+    print(f'{max(prediction_probs) * 100.0:.2f}% chance of being a {label}.')
+
+    plt.imshow(sample, cmap = 'binary')
+    plt.show()
 
 if __name__ == "__main__":
     main(sys.argv)

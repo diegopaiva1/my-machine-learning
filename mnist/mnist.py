@@ -26,15 +26,7 @@ def main():
     except:
         model = create_model('2-dense', X_train, X_test, y_train, y_test)
 
-    # draw sample to predict it
-    random_sample = random.choice(X_test)
-    pred_probs = model.predict(np.array([random_sample]))[0]
-    pred = np.argmax(pred_probs)
-
-    print(f'My guess is... \033[1m{pred}\033[0;0m.')
-
-    plt.imshow(random_sample, cmap = 'binary')
-    plt.show()
+    predict_and_show(model, random.choice(X_test))
 
 def create_train_test_datasets():
     ''' Create train-test datasets.
@@ -91,6 +83,23 @@ def create_model(model_name, X_train, X_test, y_train, y_test):
     model.save('models/' + model_name)
 
     return model
+
+def predict_and_show(model, sample):
+    ''' Show the sample's image and predict its class.
+
+    Parameters
+    ----------
+    `model`: the model.
+    `sample`: an image array.
+    '''
+
+    prediction_probs = model.predict(np.array([sample]))[0]
+    prediction = np.argmax(prediction_probs)
+
+    print(f'My guess is... \033[1m{prediction}\033[0;0m.')
+
+    plt.imshow(sample, cmap = 'binary')
+    plt.show()
 
 if __name__ == "__main__":
     main()

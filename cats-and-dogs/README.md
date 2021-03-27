@@ -6,10 +6,13 @@ Training set is avaliable for download at https://www.microsoft.com/en-us/downlo
 
 ## Examples
 
+(Images are *black & white* and low resolution for fast training).
+
 ![Cat](./cat.png)
 
-`97.49% chance of being a Cat.`
+**Output**: 97.49% chance of being a Cat.
 
 ![Dog](./dog.png)
 
-`74.90% chance of being a Dog.`
+**Output**: 74.90% chance of being a Dog.
+

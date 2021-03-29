@@ -1,13 +1,10 @@
 import random
-from abc import ABC, abstractmethod
 
-class Blob(ABC):
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-
-        self.x = random.randint(0, self.width - 1)
-        self.y = random.randint(0, self.height - 1)
+class Blob():
+    def __init__(self, env):
+        self.env = env
+        self.x = random.randint(0, env.width - 1)
+        self.y = random.randint(0, env.height - 1)
 
     def move(self, direction):
         if direction == 'east':
@@ -38,17 +35,13 @@ class Blob(ABC):
         # If we are out of bounds, fix!
         if self.x < 0:
             self.x = 0
-        elif self.x > self.width - 1:
-            self.x = self.width - 1
+        elif self.x > self.env.width - 1:
+            self.x = self.env.width - 1
 
         if self.y < 0:
             self.y = 0
-        elif self.y > self.height - 1:
-            self.y = self.height - 1
+        elif self.y > self.env.height - 1:
+            self.y = self.env.height - 1
 
     def same_cell(self, other):
         return self.x == other.x and self.y == other.y
-
-    @abstractmethod
-    def color(self):
-        pass

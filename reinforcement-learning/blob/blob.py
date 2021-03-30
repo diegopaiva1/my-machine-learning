@@ -1,36 +1,20 @@
 import random
+from abc import ABC, abstractmethod
 
-class Blob():
+class Blob(ABC):
     def __init__(self, env):
         self.env = env
-        self.x = random.randint(0, env.width - 1)
-        self.y = random.randint(0, env.height - 1)
+        self.x = random.randint(0, self.env.width - 1)
+        self.y = random.randint(0, self.env.height - 1)
 
-    def move(self, direction):
-        if direction == 'east':
-            self.x += 1
-        elif direction == 'west':
-            self.x -= 1
-        elif direction == 'north':
-            self.y += 1
-        elif direction == 'south':
-            self.y -= 1
-        elif direction == 'northeast':
-            self.move('north')
-            self.move('east')
-        elif direction == 'northwest':
-            self.move('north')
-            self.move('west')
-        elif direction == 'southeast':
-            self.move('south')
-            self.move('east')
-        elif direction == 'southwest':
-            self.move('south')
-            self.move('west')
-        elif direction == 'stand':
-            pass
-        else:
-            raise ValueError(f'Invalid direction {direction}')
+    def move(self, action):
+        if action not in self.env.action_space:
+            raise ValueError(f'Invalid action \'{action}\'')
+
+        x_increment, y_increment = action
+
+        self.x += x_increment
+        self.y += y_increment
 
         # If we are out of bounds, fix!
         if self.x < 0:
@@ -45,3 +29,7 @@ class Blob():
 
     def same_cell(self, other):
         return self.x == other.x and self.y == other.y
+
+    @abstractmethod
+    def color(self):
+        pass

@@ -11,6 +11,7 @@ RENDER_EVERY = 10_000
 EPSILON = 0.5
 START_EPSILON_DECAYING = 1
 END_EPSILON_DECAYING = EPISODES // 2
+EPSILON_DECAY_VALUE = EPSILON/(END_EPSILON_DECAYING - START_EPSILON_DECAYING)
 
 def main():
     env = gym.make('MountainCar-v0')
@@ -18,12 +19,11 @@ def main():
     discrete_observation_space_size = [20] * len(env.observation_space.high) # or .low, does not really matter
     batch_size = (env.observation_space.high - env.observation_space.low)/discrete_observation_space_size
 
-    # initializing q-table with random values with proper dimension
+    # Initializing q-table with random values with proper dimension
     q_table = np.random.uniform(low = -2, high = 0, size = discrete_observation_space_size + [env.action_space.n])
 
-    # give our agent the opportunity to conduct a random exploration
+    # Give our agent the opportunity to conduct a random exploration
     epsilon = EPSILON
-    epsilon_decay_value = epsilon/(END_EPSILON_DECAYING - START_EPSILON_DECAYING)
 
     cum_rewards = 0
     cum_avg_rewards = []
@@ -51,16 +51,16 @@ def main():
                 max_future_q = np.max(q_table[new_discrete_observation])
                 new_q = (1 - LEARNING_RATE) * current_q + LEARNING_RATE * (reward + DISCOUNT * max_future_q)
 
-                # update q-value for the taken action
+                # Update q-value for the taken action
                 q_table[current_discrete_observation + (action, )] = new_q
             elif new_observation[0] >= env.goal_position:
-                # well done
+                # Well done
                 q_table[current_discrete_observation + (action, )] = 0
 
             current_discrete_observation = new_discrete_observation
 
         if START_EPSILON_DECAYING <= episode <= END_EPSILON_DECAYING:
-            epsilon -= epsilon_decay_value
+            epsilon -= EPSILON_DECAY_VALUE
 
         cum_rewards += total_episode_reward
         avg_reward = cum_rewards/(episode + 1)

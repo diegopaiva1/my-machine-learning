@@ -4,6 +4,10 @@
   
 The environment consists of three blob objects, namely: the agent, the food and the enemy. The objective is to make the agent learn to capture the food, which  gives them a positive reward, while avoiding the enemy, which is associated with negative reward.
 
+![blob_game](./blob_game.png)
+
+In the image above, the agent is the blue tile, the food is the green tile and the enemy is the red one, considering an environment of size 10 x 10.
+
 </div>
 
 ## Methodology

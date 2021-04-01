@@ -22,7 +22,7 @@ The architecture of a DQN is like a standard neural network where we pass an inp
 
 For the input, because we are using images, we use a Convolutional Neural Network (CNN) and then pass the results to a sequential model to produce some output value for each action. 
 
-The major difference is calculating the loss, and this is where replay memory and target network comes into play. Because Reinforcement Learning (RL) is not like Supervised Learning where we have clear labels for our data, we use the replay memory and the target network to come up the `actual value` that we then use for the loss (`predicted_value` - `actual_value`). This means that before we start training our network, we need to have the actual values for the states, so how do we get them?
+The major difference is calculating the loss, and this is where replay memory and target network comes into play. Because Reinforcement Learning (RL) is not like supervised learning where we have clear labels for our data, we use the replay memory and the target network to come up the `actual value` that we then use for the loss (`predicted_value` - `actual_value`). This means that before we start training our network, we need to have the actual values for the states, so how do we get them?
 
 </div>
 
@@ -48,3 +48,7 @@ Anyway, we pass in <img src="https://render.githubusercontent.com/render/math?ma
 After that just plug it into the loss (`predicted_value` - `actual_value`) and then just do normal backpropagation.
 
 </div>
+
+## References
+
+*  https://pythonprogramming.net/training-deep-q-learning-dqn-reinforcement-learning-python-tutorial/
